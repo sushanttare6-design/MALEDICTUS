@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nocturn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MALEDICTUS · Nocturn cloth · cursed weave</title>
+  <!-- Typography: gothic grotesque + monastic serif -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* THEME: NOCTURN (shadow & silver) */
+    :root[data-theme="nocturn"] {
+      --bg: #05020a;
+      --surface: #0c0815;
+      --surface-elevated: #171123;
+      --text: #e7dfe6;
+      --text-soft: #a595b0;
+      --text-muted: #4d3b54;
+      --accent: #a37c9b;
+      --accent-glow: #c9a3c1;
+      --accent-deep: #7a5c74;
+      --accent-subtle: #2e2335;
+      --border-light: #453a51;
+      --shadow-sm: 0 12px 28px -8px rgba(0,0,0,0.9);
+      --shadow-lg: 0 30px 50px -15px rgba(0,0,0,1);
+      --transition: 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --radius-card: 24px 8px 24px 8px;
+      --grid-gap: 2rem;
+    }
+
+    /* ALTERNATE THEME: "lumen" — pale ghost & bone */
+    :root[data-theme="lumen"] {
+      --bg: #f3efea;
+      --surface: #ffffff;
+      --surface-elevated: #fcf9f5;
+      --text: #1a1722;
+      --text-soft: #655c6b;
+      --text-muted: #cdc4d3;
+      --accent: #b18ba8;
+      --accent-glow: #d6b1cd;
+      --accent-deep: #8f6c86;
+      --accent-subtle: #e6dce4;
+      --border-light: #ded3e0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+    /* cursed header */
+    .cursed-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5, 2, 10, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--accent);
+      transition: var(--transition);
+    }
+    [data-theme="lumen"] .cursed-header {
+      background: rgba(243, 239, 234, 0.96);
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-shadow {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-curse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: var(--accent-glow);
+      text-transform: uppercase;
+      border-left: 5px solid var(--accent);
+      padding-left: 18px;
+    }
+    .brand-curse small {
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 4px;
+      margin-left: 6px;
+      color: var(--text-soft);
+    }
+
+    .nav-curse-links {
+      display: flex;
+      gap: 2.2rem;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2.8px;
+    }
+    .nav-curse-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .nav-curse-links a:hover { color: var(--accent-glow); text-shadow: 0 0 4px var(--accent); }
+
+    .curse-utils {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    #themeToggleCurse {
+      background: var(--accent-subtle);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-family: monospace;
+      transition: 0.2s;
+    }
+    .curse-cart {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+    .cart-count-curse {
+      background: var(--accent);
+      color: #05020a;
+      font-size: 0.55rem;
+      font-weight: 800;
+      border-radius: 20px;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -10px;
+      right: -16px;
+    }
+
+    /* hero — nocturnal veil */
+    .hero-curse {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1509319117196-3f1ce1d28bef?q=80&w=1974&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 40% 60%;
+    }
+    .hero-curse::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 40%, #05020aaa, #000000dd);
+      z-index: 1;
+    }
+    .hero-curse-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      padding: 0 6%;
+    }
+    .hero-curse-badge {
+      font-size: 0.55rem;
+      letter-spacing: 6px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--accent-glow);
+      border-right: 3px solid var(--accent);
+      display: inline-block;
+      padding-right: 12px;
+      font-family: monospace;
+    }
+    .hero-curse-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 12vw, 6.2rem);
+      font-weight: 500;
+      line-height: 0.95;
+      margin-bottom: 1rem;
+      color: #f1e9f0;
+      letter-spacing: -2px;
+    }
+    .hero-curse-offer {
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.6);
+      display: inline-block;
+      padding: 0.5rem 1.4rem;
+      backdrop-filter: blur(6px);
+      border-left: 3px solid var(--accent);
+    }
+
+    .btn-curse {
+      background: var(--accent);
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+      color: #05020a;
+      font-family: monospace;
+    }
+    .btn-curse:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(163,124,155,0.3);
+    }
+
+    /* collection header */
+    .curse-collection {
+      max-width: 1440px;
+      margin: 3rem auto 0.5rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.8rem;
+    }
+    .curse-collection h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+    }
+    .curse-collection p {
+      color: var(--accent-glow);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      font-family: monospace;
+    }
+
+    /* product grid — nocturn archive */
+    .grid-curse {
+      max-width: 1440px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .curse-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .curse-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-glow);
+      box-shadow: var(--shadow-lg);
+    }
+    .curse-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--surface-elevated);
+      filter: brightness(0.96) contrast(1.05);
+    }
+    .curse-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s;
+    }
+    .curse-card:hover .curse-media img { transform: scale(1.04); filter: brightness(1.02); }
+    .curse-quick {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(12, 8, 21, 0.96);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem;
+      opacity: 0;
+      transition: 0.2s;
+      text-align: center;
+    }
+    .curse-card:hover .curse-quick { opacity: 1; }
+    .curse-quick button {
+      background: var(--accent);
+      border: none;
+      width: 90%;
+      padding: 0.7rem;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #05020a;
+      font-family: monospace;
+    }
+    .curse-quick button:hover { background: white; color: #171123; }
+
+    .curse-info {
+      padding: 1rem 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .curse-detail h4 {
+      font-size: 0.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      letter-spacing: 2.5px;
+    }
+    .curse-detail h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+    .curse-price { text-align: right; }
+    .curse-current { font-weight: 700; font-size: 1rem; }
+    .curse-old { font-size: 0.65rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    /* cart — shadow pouch */
+    .cart-overlay-curse {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(24px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+    .cart-overlay-curse.active { visibility: visible; opacity: 1; }
+    .cart-curse-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 540px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-lg);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-overlay-curse.active .cart-curse-panel { transform: translateX(0); }
+    .cart-curse-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-curse-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+    }
+    .close-curse-cart {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .cart-curse-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .curse-cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem;
+      background: var(--surface-elevated);
+      border-left: 4px solid var(--accent);
+      position: relative;
+      border-radius: 20px 8px 20px 8px;
+    }
+    .curse-cart-img {
+      width: 75px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .curse-cart-details { flex: 1; }
+    .curse-cart-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .curse-cart-price { font-size: 0.75rem; color: var(--accent-glow); margin-top: 4px; }
+    .curse-cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .curse-qty-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .curse-remove {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .cart-curse-footer {
+      padding: 1.5rem;
+      border-top: 2px solid var(--accent);
+      background: var(--surface);
+    }
+    .curse-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+    .curse-checkout {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #05020a;
+      font-family: monospace;
+    }
+    .curse-checkout:hover { background: var(--accent-glow); transform: scale(0.98);}
+    .empty-curse-cart { text-align: center; color: var(--text-soft); padding: 2rem; font-size: 0.75rem; font-family: monospace;}
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 3rem;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--accent);
+    }
+    .footer-curse {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-curse-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+    }
+    .footer-curse-regions {
+      font-size: 0.5rem;
+      letter-spacing: 4px;
+      color: var(--text-soft);
+      margin: 0.6rem 0 1rem;
+      font-family: monospace;
+    }
+
+    /* entry modal — nocturn invocation */
+    .modal-curse {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.97);
+      backdrop-filter: blur(32px);
+      transition: opacity 0.25s;
+    }
+    .modal-curse-block {
+      background: var(--surface);
+      max-width: 560px;
+      width: 100%;
+      border-bottom: 6px solid var(--accent);
+      padding: 2rem 2rem 2rem;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 40px 60px rgba(0,0,0,0.9);
+    }
+    .modal-curse-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-curse-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(163,124,155,0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2.2rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent);
+      color: var(--accent-glow);
+    }
+    .modal-curse-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: var(--accent-glow);
+      margin-bottom: 0.2rem;
+    }
+    .modal-curse-desc {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-curse-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+    .btn-curse-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.8rem 2.2rem;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #05020a;
+      font-family: monospace;
+    }
+    .btn-curse-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.8rem 1.8rem;
+      font-weight: 500;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+      font-family: monospace;
+    }
+    .modal-fade-curse { opacity: 0; pointer-events: none; transition: opacity 0.2s; display: none; }
+
+    @media (max-width: 780px) {
+      .nav-shadow { flex-direction: column; gap: 0.8rem; }
+      .grid-curse { gap: 1.2rem; }
+    }
+  </style>
+  
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SBJZ7C7VV0');
+  </script>
+  
+</head>
+<body>
+
+<!-- entry modal: MALEDICTUS invocation -->
+<div id="entryModalCurse" class="modal-curse">
+  <div class="modal-curse-block">
+    <button id="closeCurseModal" class="modal-curse-close"><i class="fas fa-moon"></i></button>
+    <div class="modal-curse-icon"><i class="fas fa-skull"></i></div>
+    <h2 class="modal-curse-title">MALEDICTUS</h2>
+    <p class="modal-curse-desc">Nocturn cloth · cursed weave · shadow linen. Garments forged in midnight pigment and lunar ash. Enter the veil.</p>
+    <div class="modal-curse-buttons">
+      <button id="enterCurseBtn" class="btn-curse-primary">🌙 ENTER THE VEIL</button>
+      <button id="laterCurseBtn" class="btn-curse-secondary">WALK IN SHADOW LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="cursed-header">
+  <div class="nav-shadow">
+    <div class="brand-curse">MALEDICTUS<small>· NOCTURN</small></div>
+    <nav class="nav-curse-links">
+      <a href="#shopCurse">SHADOW ARCHIVE</a>
+      <a href="#shopCurse">CURSED WEAVE</a>
+      <a href="#shopCurse">LUNAR DYE</a>
+      <a href="#">VEIL</a>
+    </nav>
+    <div class="curse-utils">
+      <button id="themeToggleCurse">☀️ LUMEN MODE</button>
+      <div class="curse-cart" id="cartIconCurse">
+        <i class="fas fa-crown"></i>
+        <span class="cart-count-curse" id="cartCountCurse">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-curse">
+    <div class="hero-curse-content">
+      <div class="hero-curse-badge">NOCTURN CLOTH · CURSED WEAVE · LUNAR DYE</div>
+      <h1 class="hero-curse-title">MALEDICTUS</h1>
+      <div class="hero-curse-offer">First rite: <strong>15% shadow tithe</strong> on your first cursed garment</div>
+      <a href="#shopCurse" class="btn-curse">ENTER THE VEIL →</a>
+    </div>
+  </section>
+
+  <div class="curse-collection" id="shopCurse">
+    <h2>Nocturn Archive · Lunar & Cursed Weaves</h2>
+    <p>12 shadow artifacts</p>
+  </div>
+
+  <div class="grid-curse" id="productGridCurse"></div>
+</main>
+
+<footer>
+  <div class="footer-curse">
+    <div class="footer-curse-brand">MALEDICTUS</div>
+    <div class="footer-curse-regions">NOCTURN CLOTH · CURSED WEAVE · LUNAR DYELOT</div>
+    <p style="font-size:0.55rem; opacity:0.7;">© 2026 MALEDICTUS — garments of shadow, worn by those who walk between.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlayCurse" class="cart-overlay-curse">
+  <div class="cart-curse-panel">
+    <div class="cart-curse-header">
+      <h3>🖤 SHADOW FOLIO</h3>
+      <button class="close-curse-cart" id="closeCartCurse"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-curse-items" id="cartItemsCurse">
+      <div class="empty-curse-cart">The veil is empty.<br>Add cursed garments.</div>
+    </div>
+    <div class="cart-curse-footer" id="cartFooterCurse" style="display: none;">
+      <div class="curse-total"><span>Total (USD)</span><span id="cartTotalCurse">$0</span></div>
+      <button class="curse-checkout" id="checkoutCurseBtn">🕸️ CONSECRATE SHADOW</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // MALEDICTUS product catalog — nocturnal & cursed weave imagery
+  const curseProducts = [
+    { id: 7701, name: "Nocturn Cloak", category: "VEIL", original: 975, price: 828, img: "https://images.unsplash.com/photo-1559548331-f9cb98001426?q=80&w=687&auto=format&fit=crop", alt: "dark cloak" },
+    { id: 7702, name: "Lunar Tunic", category: "CURSE", original: 389, price: 330, img: "https://images.unsplash.com/photo-1733311245658-3bfe7f9438e7?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "tunic" },
+    { id: 7703, name: "Cursed Weave Shirt", category: "LAYER", original: 645, price: 548, img: "https://images.unsplash.com/photo-1603251578711-3290ca1a0187?q=80&w=687&auto=format&fit=crop", alt: "shirt" },
+    { id: 7704, name: "Shadow Pants", category: "BOTTOMS", original: 520, price: 442, img: "https://images.unsplash.com/photo-1584370848010-d7fe6bc767ec?q=80&w=687&auto=format&fit=crop", alt: "pants" },
+    { id: 7705, name: "Midnight Anorak", category: "OUTER", original: 890, price: 756, img: "https://images.unsplash.com/photo-1638108587366-13a362cf9adb?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "anorak" },
+    { id: 7706, name: "Cursed Vest", category: "VEST", original: 460, price: 391, img: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=687&auto=format&fit=crop", alt: "vest" },
+    { id: 7707, name: "Spectre Smock", category: "SMOCK", original: 1120, price: 952, img: "https://plus.unsplash.com/premium_photo-1673356302067-aac3b545a362?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "smock" },
+    { id: 7708, name: "Nocturn Coat", category: "COAT", original: 1595, price: 1355, img: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=687&auto=format&fit=crop", alt: "coat" },
+    { id: 7709, name: "Ash Cargo", category: "BOTTOMS", original: 595, price: 505, img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=720&auto=format&fit=crop", alt: "cargo" },
+    { id: 7710, name: "Grave Hood", category: "HOODIE", original: 395, price: 335, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=687&auto=format&fit=crop", alt: "hoodie" },
+    { id: 7711, name: "Lunar Duster", category: "OUTER", original: 1990, price: 1691, img: "https://images.unsplash.com/photo-1752794674929-e541cd3a008e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "duster" },
+    { id: 7712, name: "Cursed Shacket", category: "SHIRT", original: 720, price: 612, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "shacket" }
+  ];
+
+  let cartCurse = [];
+  const cartOverlayCurseDiv = document.getElementById('cartOverlayCurse');
+  const cartCurseIcon = document.getElementById('cartIconCurse');
+  const closeCartCurseBtn = document.getElementById('closeCartCurse');
+  const cartCurseContainer = document.getElementById('cartItemsCurse');
+  const cartCurseFooter = document.getElementById('cartFooterCurse');
+  const cartTotalCurseSpan = document.getElementById('cartTotalCurse');
+  const cartCountCurseSpan = document.getElementById('cartCountCurse');
+
+  function persistCurseCart() { localStorage.setItem('MALEDICTUS_CART', JSON.stringify(cartCurse)); }
+  function loadCurseCart() {
+    const saved = localStorage.getItem('MALEDICTUS_CART');
+    if (saved) cartCurse = JSON.parse(saved);
+    renderCurseCart();
+    updateCurseCount();
+  }
+  function updateCurseCount() { cartCountCurseSpan.innerText = cartCurse.reduce((sum,i)=>sum+i.qty,0); }
+
+  function renderCurseCart() {
+    if (!cartCurseContainer) return;
+    if (cartCurse.length === 0) {
+      cartCurseContainer.innerHTML = '<div class="empty-curse-cart">The veil is empty.<br>Add cursed garments.</div>';
+      cartCurseFooter.style.display = 'none';
+      updateCurseCount(); persistCurseCart(); return;
+    }
+    cartCurseFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cartCurse.forEach(item => {
+      total += item.price * item.qty;
+      html += `<div class="curse-cart-item" data-id="${item.id}">
+          <img class="curse-cart-img" src="${item.img}" alt="${item.name}">
+          <div class="curse-cart-details">
+            <div class="curse-cart-name">${item.name}</div>
+            <div class="curse-cart-price">$${item.price.toLocaleString()}</div>
+            <div class="curse-cart-qty">
+              <button class="curse-qty-dec" data-id="${item.id}">−</button>
+              <span>${item.qty}</span>
+              <button class="curse-qty-inc" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="curse-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartCurseContainer.innerHTML = html;
+    cartTotalCurseSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.curse-qty-dec').forEach(btn => btn.addEventListener('click', () => updateCurseQty(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.curse-qty-inc').forEach(btn => btn.addEventListener('click', () => updateCurseQty(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.curse-remove').forEach(btn => btn.addEventListener('click', () => removeCurseItem(parseInt(btn.dataset.id))));
+    updateCurseCount(); persistCurseCart();
+  }
+  function updateCurseQty(pid, delta) {
+    const idx = cartCurse.findIndex(i=>i.id===pid);
+    if(idx !== -1){
+      const nq = cartCurse[idx].qty + delta;
+      if(nq <= 0) cartCurse.splice(idx,1);
+      else cartCurse[idx].qty = nq;
+      renderCurseCart();
+    }
+  }
+  function removeCurseItem(pid){ cartCurse = cartCurse.filter(i=>i.id!==pid); renderCurseCart(); }
+  function addToCurseCart(pid){
+    const prod = curseProducts.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cartCurse.find(i=>i.id===pid);
+    if(existing) existing.qty += 1;
+    else cartCurse.push({id:prod.id, name:prod.name, price:prod.price, qty:1, img:prod.img});
+    renderCurseCart();
+    const btn = document.querySelector(`.curse-add-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="🕸️ CURSED"; setTimeout(()=>btn.innerText=old,700); }
+    cartOverlayCurseDiv.classList.add('active');
+  }
+
+  function renderCurseProducts() {
+    const container = document.getElementById('productGridCurse');
+    if(!container) return;
+    container.innerHTML = '';
+    curseProducts.forEach(p => {
+      const disc = Math.round(((p.original-p.price)/p.original)*100);
+      const card = document.createElement('div');
+      card.className = 'curse-card';
+      card.innerHTML = `
+        <div class="curse-media">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="curse-quick"><button class="curse-add-${p.id} add-curse-btn" data-id="${p.id}">🕸️ ADD TO VEIL</button></div>
+        </div>
+        <div class="curse-info">
+          <div class="curse-detail"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="curse-price"><span class="curse-current">$${p.price.toLocaleString()}</span><span class="curse-old">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent-glow);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-curse-btn').forEach(btn => btn.addEventListener('click', (e)=>{ e.preventDefault(); addToCurseCart(parseInt(btn.dataset.id)); }));
+  }
+
+  function initThemeCurse() {
+    const stored = localStorage.getItem('MALEDICTUS_theme');
+    let theme = stored || 'nocturn';
+    document.documentElement.setAttribute('data-theme', theme);
+    const toggle = document.getElementById('themeToggleCurse');
+    if(toggle) toggle.textContent = theme === 'nocturn' ? '☀️ LUMEN MODE' : '🌙 NOCTURN MODE';
+  }
+  function toggleThemeCurse() {
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'nocturn' ? 'lumen' : 'nocturn';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('MALEDICTUS_theme', next);
+    const toggleBtn = document.getElementById('themeToggleCurse');
+    if(toggleBtn) toggleBtn.textContent = next === 'nocturn' ? '☀️ LUMEN MODE' : '🌙 NOCTURN MODE';
+  }
+
+  // modal handlers
+  const modalCurseElem = document.getElementById('entryModalCurse');
+  const enterCurse = document.getElementById('enterCurseBtn'), laterCurse = document.getElementById('laterCurseBtn'), closeCurseModalBtn = document.getElementById('closeCurseModal');
+  function closeCurseModalFunc() {
+    if(modalCurseElem){
+      modalCurseElem.classList.add('modal-fade-curse');
+      setTimeout(()=>modalCurseElem.style.display='none',200);
+    }
+  }
+  if(enterCurse) enterCurse.addEventListener('click', closeCurseModalFunc);
+  if(laterCurse) laterCurse.addEventListener('click', closeCurseModalFunc);
+  if(closeCurseModalBtn) closeCurseModalBtn.addEventListener('click', closeCurseModalFunc);
+  if(modalCurseElem) modalCurseElem.addEventListener('click',(e)=>{ if(e.target===modalCurseElem) closeCurseModalFunc(); });
+
+  cartCurseIcon?.addEventListener('click',()=>cartOverlayCurseDiv.classList.add('active'));
+  closeCartCurseBtn?.addEventListener('click',()=>cartOverlayCurseDiv.classList.remove('active'));
+  cartOverlayCurseDiv?.addEventListener('click',(e)=>{ if(e.target===cartOverlayCurseDiv) cartOverlayCurseDiv.classList.remove('active'); });
+  document.getElementById('checkoutCurseBtn')?.addEventListener('click',()=>{ alert('MALEDICTUS accepts your shadow-offering. Your cursed garments are sealed in lunar ash and nocturn thread.'); cartCurse=[]; renderCurseCart(); cartOverlayCurseDiv.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const hash=this.getAttribute('href'); if(hash==="#") return; const sec=document.querySelector(hash); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderCurseProducts();
+  initThemeCurse();
+  loadCurseCart();
+  document.getElementById('themeToggleCurse')?.addEventListener('click', toggleThemeCurse);
+</script>
+</body>
+</html>
